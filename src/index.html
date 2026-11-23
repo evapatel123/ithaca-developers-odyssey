@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Eva Patel — A Developer’s Odyssey</title>
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A software engineering journey told through the ancient voyage of the Odyssey.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../dist/style.css">
+
+  </head>
+    
+  <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+	<filter id="pressDistort" x="-20%" y="-20%" width="140%" height="140%">
+		<feTurbulence type="fractalNoise" baseFrequency="0.012 0.022" numOctaves="2" seed="7" result="noise" />
+		<feDisplacementMap id="distortMap" in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" />
+	</filter>
+</svg>
+
+<canvas class="grain" id="grainCanvas"></canvas>
+
+<div class="scene" id="scene">
+
+	<div class="parallax-sky">
+		<div class="sky"></div>
+		<div class="sun-glow"></div>
+	</div>
+
+	<div class="parallax-far">
+		<svg class="clouds-far" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">
+			<defs>
+				<radialGradient id="cf1" cx="50%" cy="50%" r="50%">
+					<stop offset="0%" stop-color="#f3e0ac" stop-opacity="0.8" />
+					<stop offset="100%" stop-color="#5a4d34" stop-opacity="0" />
+				</radialGradient>
+				<radialGradient id="cf2" cx="50%" cy="50%" r="50%">
+					<stop offset="0%" stop-color="#776a4d" stop-opacity="0.7" />
+					<stop offset="100%" stop-color="#3a3122" stop-opacity="0" />
+				</radialGradient>
+			</defs>
+			<ellipse cx="280" cy="220" rx="320" ry="120" fill="url(#cf2)" />
+			<ellipse cx="620" cy="160" rx="380" ry="140" fill="url(#cf1)" />
+			<ellipse cx="1020" cy="260" rx="340" ry="130" fill="url(#cf2)" />
+			<ellipse cx="1240" cy="150" rx="260" ry="100" fill="url(#cf1)" />
+			<ellipse cx="150" cy="380" rx="300" ry="110" fill="url(#cf2)" />
+			<ellipse cx="780" cy="420" rx="280" ry="100" fill="url(#cf2)" />
+			<ellipse cx="1330" cy="430" rx="240" ry="95" fill="url(#cf1)" />
+			<ellipse cx="40" cy="120" rx="220" ry="85" fill="url(#cf1)" />
+		</svg>
+	</div>
+
+	<div class="birds-layer">
+		<div class="bird-fly" style="top:16%; animation-duration:54s; animation-delay:-4s;">
+			<div class="bird-flap"><svg width="30" height="18" viewBox="-18 -12 36 24">
+					<path d="M-14,0 Q-6,-9 0,0 Q6,-9 14,0" fill="none" stroke="#241a10" stroke-width="2.4" stroke-linecap="round" />
+				</svg></div>
+		</div>
+		<div class="bird-fly" style="top:13%; animation-duration:54s; animation-delay:-7s;">
+			<div class="bird-flap" style="animation-delay:-.2s;"><svg width="22" height="14" viewBox="-18 -12 36 24">
+					<path d="M-14,0 Q-6,-9 0,0 Q6,-9 14,0" fill="none" stroke="#241a10" stroke-width="2.4" stroke-linecap="round" />
+				</svg></div>
+		</div>
+		<div class="bird-fly" style="top:22%; animation-duration:71s; animation-delay:-22s;">
+			<div class="bird-flap" style="animation-delay:-.35s;"><svg width="34" height="20" viewBox="-18 -12 36 24">
+					<path d="M-14,0 Q-6,-9 0,0 Q6,-9 14,0" fill="none" stroke="#241a10" stroke-width="2.6" stroke-linecap="round" opacity="0.6" />
+				</svg></div>
+		</div>
+		<div class="bird-fly" style="top:28%; animation-duration:71s; animation-delay:-35s;">
+			<div class="bird-flap" style="animation-delay:-.5s;"><svg width="26" height="16" viewBox="-18 -12 36 24">
+					<path d="M-14,0 Q-6,-9 0,0 Q6,-9 14,0" fill="none" stroke="#241a10" stroke-width="2.4" stroke-linecap="round" opacity="0.55" />
+				</svg></div>
+		</div>
+		<div class="bird-fly" style="top:10%; animation-duration:88s; animation-delay:-50s;">
+			<div class="bird-flap" style="animation-delay:-.15s;"><svg width="20" height="12" viewBox="-18 -12 36 24">
+					<path d="M-14,0 Q-6,-9 0,0 Q6,-9 14,0" fill="none" stroke="#241a10" stroke-width="2.2" stroke-linecap="round" opacity="0.45" />
+				</svg></div>
+		</div>
+	</div>
+
+	<div class="parallax-near">
+		<svg class="clouds-near" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">
+			<defs>
+				<radialGradient id="cn1" cx="50%" cy="50%" r="50%">
+					<stop offset="0%" stop-color="#f8e8c0" stop-opacity="0.85" />
+					<stop offset="100%" stop-color="#6b5b3a" stop-opacity="0" />
+				</radialGradient>
+				<radialGradient id="cn2" cx="50%" cy="50%" r="50%">
+					<stop offset="0%" stop-color="#3f372a" stop-opacity="0.75" />
+					<stop offset="100%" stop-color="#241f17" stop-opacity="0" />
+				</radialGradient>
+			</defs>
+			<ellipse cx="180" cy="340" rx="260" ry="90" fill="url(#cn2)" />
+			<ellipse cx="520" cy="240" rx="300" ry="110" fill="url(#cn1)" />
+			<ellipse cx="900" cy="320" rx="280" ry="95" fill="url(#cn2)" />
+			<ellipse cx="1180" cy="220" rx="240" ry="90" fill="url(#cn1)" />
+			<ellipse cx="60" cy="480" rx="220" ry="85" fill="url(#cn2)" />
+			<ellipse cx="1320" cy="460" rx="230" ry="90" fill="url(#cn1)" />
+		</svg>
+	</div>
+
+	<div class="mist-layer"></div>
+
+	<!-- distant coastline the ship passes -->
+	<div class="world-far-wrap">
+		<svg viewBox="0 0 12200 400" preserveAspectRatio="none">
+			<g fill="#241a10" fill-opacity="0.82" stroke="#f0c878" stroke-opacity="0.22" stroke-width="1.3">
+
+				<!-- Troy, burning, in our wake -->
+				<g transform="translate(150,0)">
+					<path d="M-80,400 L-30,310 L20,265 L80,265 L130,310 L180,400 Z" />
+					<path d="M-10,400 L-10,255 L2,255 L2,243 L14,243 L14,255 L26,255 L26,243 L38,243 L38,255 L50,255 L50,243 L62,243 L62,255 L74,255 L74,243 L86,243 L86,255 L90,255 L90,400 Z" />
+					<path d="M-5,400 L-5,165 L19,165 L19,400 Z" />
+					<path d="M-8,165 L7,138 L22,165 Z" />
+					<path d="M65,400 L65,175 L87,175 L87,400 Z" />
+					<path d="M62,175 L76,148 L90,175 Z" />
+					<path d="M28,400 L28,95 L58,95 L58,400 Z" />
+					<path d="M25,95 L43,68 L61,95 Z" />
+					<path d="M2,165 Q8,148 14,165 Q10,158 6,165 Z" fill="#c98f3f" fill-opacity="0.75" stroke="none" />
+					<path d="M70,175 Q76,158 82,175 Q78,166 74,175 Z" fill="#c98f3f" fill-opacity="0.75" stroke="none" />
+					<path d="M35,95 Q43,74 51,95 Q46,84 40,95 Z" fill="#d9a655" fill-opacity="0.8" stroke="none" />
+					<ellipse cx="10" cy="118" rx="14" ry="22" fill="#241a10" fill-opacity="0.4" stroke="none" />
+					<ellipse cx="76" cy="128" rx="12" ry="20" fill="#241a10" fill-opacity="0.35" stroke="none" />
+					<ellipse cx="43" cy="52" rx="16" ry="26" fill="#241a10" fill-opacity="0.4" stroke="none" />
+					<g transform="translate(110,0)">
+						<path d="M0,400 L0,378 Q4,366 14,364 L14,350 L20,350 L20,364 Q30,366 32,378 L32,400 Z" />
+						<path d="M28,364 L44,346 L48,355 L34,368 Z" />
+						<line x1="2" y1="382" x2="-6" y2="400" stroke-width="3" />
+						<line x1="11" y1="386" x2="7" y2="400" stroke-width="3" />
+						<line x1="21" y1="386" x2="23" y2="400" stroke-width="3" />
+						<line x1="29" y1="382" x2="35" y2="400" stroke-width="3" />
+					</g>
+				</g>
+
+				<!-- the Lotus-Eaters' shore -->
+				<g transform="translate(990,0)">
+					<path d="M-70,400 Q0,368 70,400 Z" />
+					<g stroke="#241a10" stroke-opacity="0.85" fill="none" stroke-linecap="round">
+						<path d="M-30,400 Q-34,360 -20,330" stroke-width="5" />
+						<path d="M-20,330 Q-40,322 -52,308" stroke-width="2.5" />
+						<path d="M-20,330 Q-36,318 -44,300" stroke-width="2.5" />
+						<path d="M-20,330 Q-4,316 6,300" stroke-width="2.5" />
+						<path d="M-20,330 Q-8,322 4,312" stroke-width="2.5" />
+						<path d="M20,400 Q14,350 28,316" stroke-width="5" />
+						<path d="M28,316 Q10,306 -2,294" stroke-width="2.5" />
+						<path d="M28,316 Q46,304 56,288" stroke-width="2.5" />
+						<path d="M28,316 Q34,300 46,290" stroke-width="2.5" />
+					</g>
+					<g fill="#ece1c8" fill-opacity="0.4" stroke="#f0c878" stroke-opacity="0.3">
+						<circle cx="-45" cy="394" r="5" />
+						<circle cx="-36" cy="397" r="4" />
+						<circle cx="38" cy="396" r="5" />
+						<circle cx="48" cy="393" r="4" />
+					</g>
+				</g>
+
+				<!-- Polyphemus the Cyclops -->
+				<g transform="translate(1980,0)">
+					<path d="M-90,400 L-80,300 L-50,240 L10,230 L60,260 L80,330 L70,400 Z" />
+					<path d="M-40,400 L-32,330 Q-20,300 6,302 Q26,304 28,335 L24,400 Z" fill="#120e09" fill-opacity="0.55" stroke="none" />
+					<g transform="translate(-15,0)">
+						<path d="M-22,400 L-26,330 Q-26,280 0,260 Q26,280 26,330 L22,400 Z" />
+						<circle cx="0" cy="240" r="20" />
+						<circle cx="0" cy="238" r="6" fill="#f0c878" fill-opacity="0.55" stroke="none" />
+						<path d="M30,300 Q60,290 76,250" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="9" stroke-linecap="round" />
+						<ellipse cx="80" cy="244" rx="16" ry="11" transform="rotate(-30 80 244)" />
+					</g>
+					<g transform="translate(-92,0)">
+						<ellipse cx="0" cy="392" rx="13" ry="8" />
+						<ellipse cx="-12" cy="388" rx="6" ry="5" />
+						<ellipse cx="26" cy="394" rx="11" ry="7" />
+					</g>
+				</g>
+
+				<!-- Aeolus, keeper of the winds -->
+				<g transform="translate(2970,0)">
+					<path d="M-60,400 Q0,375 60,400 Z" />
+					<path d="M-22,400 L-22,330 Q-22,310 0,306 Q22,310 22,330 L22,400 Z" />
+					<path d="M-26,306 Q0,288 26,306 Q14,298 0,296 Q-14,298 -26,306 Z" />
+					<g fill="none" stroke="#241a10" stroke-opacity="0.6" stroke-width="2">
+						<path d="M-50,250 Q-20,230 10,250 Q30,264 55,250" />
+						<path d="M-40,210 Q-10,192 20,212 Q38,224 60,212" />
+						<path d="M-55,290 Q-25,272 5,290" />
+					</g>
+				</g>
+
+				<!-- the Laestrygonians' fjord -->
+				<g transform="translate(3960,0)">
+					<path d="M-140,400 L-110,260 L-80,220 L-60,260 L-70,400 Z" />
+					<path d="M60,400 L72,250 L100,200 L122,250 L150,400 Z" />
+					<g transform="translate(95,0)">
+						<path d="M-20,250 L-24,200 Q-24,160 0,145 Q24,160 24,200 L20,250 Z" />
+						<circle cx="0" cy="135" r="15" />
+						<path d="M22,180 Q48,160 56,124" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="8" stroke-linecap="round" />
+						<circle cx="60" cy="115" r="12" />
+					</g>
+					<g transform="translate(-25,0)">
+						<path d="M-35,396 Q-18,382 4,386 Q22,389 30,398 L22,400 Q-6,398 -38,400 Z" />
+						<line x1="-6" y1="384" x2="8" y2="320" stroke-width="3" />
+					</g>
+				</g>
+
+				<!-- Circe's hall on Aeaea -->
+				<g transform="translate(4950,0)">
+					<path d="M-70,400 L-70,330 L-50,330 L-50,310 L-30,310 L-30,330 L-10,330 L-10,310 L10,310 L10,330 L30,330 L30,310 L50,310 L50,330 L70,330 L70,400 Z" />
+					<path d="M-78,330 L0,290 L78,330 Z" />
+					<g transform="translate(0,0)">
+						<path d="M-12,400 Q-16,360 -8,330 Q0,318 8,330 Q16,360 12,400 Z" />
+						<circle cx="0" cy="320" r="8" />
+						<path d="M10,340 Q26,332 32,316" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="3" stroke-linecap="round" />
+					</g>
+					<g transform="translate(-40,0)">
+						<ellipse cx="0" cy="394" rx="11" ry="7" />
+						<ellipse cx="-10" cy="396" rx="4" ry="3" />
+					</g>
+					<g transform="translate(45,0)">
+						<ellipse cx="0" cy="395" rx="10" ry="6" />
+						<ellipse cx="-9" cy="396" rx="3.5" ry="3" />
+					</g>
+				</g>
+
+				<!-- the Sirens' rocks -->
+				<g transform="translate(6050,0)">
+					<path d="M-40,400 L-30,310 L-10,260 L14,280 L8,330 L30,270 L40,330 L30,400 Z" />
+					<g transform="translate(-14,250)">
+						<path d="M-14,30 Q-16,8 0,4 Q16,8 14,30 Q8,40 0,38 Q-8,40 -14,30 Z" />
+						<path d="M-14,18 Q-26,10 -30,-6" fill="none" stroke="#241a10" stroke-opacity="0.85" stroke-width="2" />
+						<circle cx="0" cy="-2" r="6" />
+					</g>
+					<g transform="translate(20,205) scale(0.85)">
+						<path d="M-14,30 Q-16,8 0,4 Q16,8 14,30 Q8,40 0,38 Q-8,40 -14,30 Z" />
+						<path d="M14,18 Q26,10 30,-6" fill="none" stroke="#241a10" stroke-opacity="0.85" stroke-width="2" />
+						<circle cx="0" cy="-2" r="6" />
+					</g>
+				</g>
+
+				<!-- Scylla, in her cave above the strait -->
+				<g transform="translate(7040,0)">
+					<path d="M-50,400 L-40,290 L-10,230 L40,225 L70,280 L60,400 Z" />
+					<path d="M-10,260 Q-18,230 -8,200" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="6" stroke-linecap="round" />
+					<path d="M10,250 Q14,212 32,188" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="6" stroke-linecap="round" />
+					<path d="M28,258 Q44,224 44,192" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="6" stroke-linecap="round" />
+					<path d="M-12,200 L-2,192 L-16,184 Z" />
+					<path d="M28,188 L40,182 L24,172 Z" />
+					<path d="M40,192 L52,186 L38,176 Z" />
+				</g>
+
+				<!-- Thrinacia, the cattle of the sun -->
+				<g transform="translate(8030,0)">
+					<path d="M-110,400 Q-40,360 30,390 Q90,360 150,400 Z" />
+					<g stroke="#241a10" stroke-opacity="0.5" fill="none" stroke-width="2">
+						<circle cx="20" cy="120" r="22" />
+						<line x1="20" y1="80" x2="20" y2="64" />
+						<line x1="20" y1="160" x2="20" y2="176" />
+						<line x1="-12" y1="120" x2="-28" y2="120" />
+						<line x1="52" y1="120" x2="68" y2="120" />
+						<line x1="-2" y1="98" x2="-12" y2="86" />
+						<line x1="42" y1="98" x2="52" y2="86" />
+					</g>
+					<g transform="translate(-50,0)">
+						<path d="M-16,390 L-16,376 L16,376 L16,390 Z" />
+						<ellipse cx="22" cy="376" rx="8" ry="6" />
+						<line x1="-14" y1="378" x2="-14" y2="392" stroke-width="3" />
+						<line x1="12" y1="378" x2="12" y2="392" stroke-width="3" />
+					</g>
+					<g transform="translate(0,4)">
+						<path d="M-16,392 L-16,378 L16,378 L16,392 Z" />
+						<ellipse cx="22" cy="378" rx="8" ry="6" />
+						<line x1="-14" y1="380" x2="-14" y2="394" stroke-width="3" />
+						<line x1="12" y1="380" x2="12" y2="394" stroke-width="3" />
+					</g>
+					<g transform="translate(60,2)">
+						<path d="M-16,391 L-16,377 L16,377 L16,391 Z" />
+						<ellipse cx="22" cy="377" rx="8" ry="6" />
+						<line x1="-14" y1="379" x2="-14" y2="393" stroke-width="3" />
+						<line x1="12" y1="379" x2="12" y2="393" stroke-width="3" />
+					</g>
+				</g>
+
+				<!-- Calypso's grotto on Ogygia -->
+				<g transform="translate(9020,0)">
+					<path d="M-80,400 Q0,360 80,400 Z" />
+					<path d="M-30,400 L-22,330 Q-22,310 0,308 Q22,310 22,330 L30,400 Z" fill="#120e09" fill-opacity="0.5" stroke="none" />
+					<g stroke="#241a10" stroke-opacity="0.85" stroke-width="4" fill="none" stroke-linecap="round">
+						<path d="M48,400 Q44,360 50,330" />
+					</g>
+					<ellipse cx="52" cy="320" rx="26" ry="20" />
+					<g transform="translate(-46,0)">
+						<path d="M-12,400 Q-15,355 -7,326 Q0,314 7,326 Q15,355 12,400 Z" />
+						<circle cx="0" cy="316" r="8" />
+					</g>
+				</g>
+
+				<!-- Scheria, the welcoming shore of the Phaeacians -->
+				<g transform="translate(9900,0)">
+					<path d="M-160,400 L-160,330 L-120,330 L-120,400 Z" />
+					<path d="M-115,400 L-115,300 L-75,300 L-75,400 Z" />
+					<path d="M-115,300 L-95,270 L-75,300 Z" />
+					<path d="M-70,400 L-70,280 L-20,280 L-20,400 Z" />
+					<path d="M-70,280 L-45,250 L-20,280 Z" />
+					<line x1="-62" y1="400" x2="-62" y2="285" stroke-width="3" />
+					<line x1="-45" y1="400" x2="-45" y2="285" stroke-width="3" />
+					<line x1="-28" y1="400" x2="-28" y2="285" stroke-width="3" />
+					<path d="M-15,400 L-15,335 L25,335 L25,400 Z" />
+					<path d="M30,400 L30,350 L65,350 L65,400 Z" />
+					<path d="M70,392 L70,386 L220,384 L220,390 Z" />
+					<g transform="translate(95,0)">
+						<path d="M-30,392 Q-15,382 0,386 Q14,389 22,396 L14,400 Q-10,398 -38,400 Z" />
+						<line x1="-8" y1="384" x2="6" y2="330" stroke-width="3" />
+						<path d="M-2,338 L18,330 Q8,352 2,362 Z" />
+					</g>
+					<g transform="translate(160,4)">
+						<path d="M-20,394 Q-8,386 4,390 L0,398 Q-12,396 -28,398 Z" />
+						<line x1="-6" y1="388" x2="2" y2="354" stroke-width="2.5" />
+					</g>
+				</g>
+
+				<!-- Ithaca: home, and Penelope waiting -->
+				<g transform="translate(11250,0)">
+					<path d="M-150,400 L-150,310 L-110,310 L-110,400 Z" />
+					<path d="M-105,400 L-105,280 L-55,280 L-55,400 Z" />
+					<path d="M-105,280 L-80,248 L-55,280 Z" />
+					<line x1="-96" y1="400" x2="-96" y2="285" stroke-width="3" />
+					<line x1="-80" y1="400" x2="-80" y2="285" stroke-width="3" />
+					<line x1="-64" y1="400" x2="-64" y2="285" stroke-width="3" />
+					<path d="M-50,400 L-50,330 L-15,330 L-15,400 Z" />
+					<ellipse cx="-32" cy="305" rx="9" ry="16" fill="#241a10" fill-opacity="0.35" stroke="none" />
+					<g stroke="#241a10" stroke-opacity="0.85" stroke-width="5" fill="none" stroke-linecap="round">
+						<path d="M40,400 Q34,360 44,326 Q40,310 50,300" />
+						<path d="M44,326 Q56,318 60,300" />
+					</g>
+					<ellipse cx="48" cy="298" rx="30" ry="22" />
+					<ellipse cx="68" cy="288" rx="18" ry="14" />
+					<g transform="translate(-2,0)" stroke="#241a10" stroke-opacity="0.7" stroke-width="2" fill="none">
+						<path d="M-8,400 L-8,360 L18,360 L18,400" />
+						<line x1="-4" y1="362" x2="-4" y2="398" />
+						<line x1="2" y1="362" x2="2" y2="398" />
+						<line x1="8" y1="362" x2="8" y2="398" />
+						<line x1="14" y1="362" x2="14" y2="398" />
+					</g>
+					<g transform="translate(-26,0)">
+						<path d="M-10,400 Q-13,365 -6,340 Q0,330 6,340 Q9,365 8,400 Z" />
+						<circle cx="0" cy="332" r="7" />
+						<path d="M8,355 Q16,348 12,338" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="3" stroke-linecap="round" />
+					</g>
+					<g transform="translate(-12,0)">
+						<path d="M-9,400 Q-12,366 -5,344 Q0,335 5,344 Q12,366 9,400 Z" />
+						<circle cx="0" cy="338" r="6.5" />
+						<path d="M-8,358 Q-15,350 -11,341" fill="none" stroke="#241a10" stroke-opacity="1" stroke-width="3" stroke-linecap="round" />
+					</g>
+				</g>
+
+			</g>
+		</svg>
+	</div>
+
+	<canvas class="fog-canvas" id="fogCanvas"></canvas>
+
+	<div class="ship-anchor">
+		<div class="ship-voyage">
+			<div class="ship-wrap">
+				<div class="ship-rock">
+					<svg viewBox="-60 -90 660 490" xmlns="http://www.w3.org/2000/svg">
+						<defs>
+							<linearGradient id="hullGrad" x1="0" y1="0" x2="0" y2="1">
+								<stop offset="0%" stop-color="#1a130b" />
+								<stop offset="70%" stop-color="#2e2113" />
+								<stop offset="100%" stop-color="#503a1f" />
+							</linearGradient>
+							<linearGradient id="sailGrad" x1="0" y1="0" x2="1" y2="0.25">
+								<stop offset="0%" stop-color="#221810" />
+								<stop offset="100%" stop-color="#4a3520" />
+							</linearGradient>
+						</defs>
+
+						<!-- bowsprit -->
+						<line x1="30" y1="320" x2="-50" y2="252" stroke="#1c140c" stroke-width="5" stroke-linecap="round" />
+
+						<!-- jibs -->
+						<path d="M-50,254 L65,216 Q35,266 10,310 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.3" stroke-width="1" />
+						<path d="M-12,278 L100,210 Q65,256 38,300 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.25" stroke-width="1" />
+
+						<!-- Odysseus at the bow -->
+						<g id="odysseusBow" stroke="#f0c878" stroke-opacity="0.3" stroke-width="1">
+							<path d="M116,236 Q138,240 152,258 Q134,254 122,248 Q124,242 116,236 Z" fill="url(#sailGrad)" />
+							<path d="M104,278 L102,255 Q102,240 110,232 Q118,240 118,255 L116,278 Z" fill="#1c140c" stroke="none" />
+							<circle cx="110" cy="224" r="7" fill="#1c140c" stroke="none" />
+							<path d="M105,217 Q110,201 115,217 Z" fill="#1c140c" stroke="none" />
+							<path d="M106,248 Q90,242 78,230" fill="none" stroke="#1c140c" stroke-opacity="1" stroke-width="3" stroke-linecap="round" />
+							<line x1="78" y1="230" x2="52" y2="203" stroke="#1c140c" stroke-opacity="1" stroke-width="2" stroke-linecap="round" />
+						</g>
+
+						<!-- masts -->
+						<line x1="190" y1="278" x2="190" y2="-35" stroke="#1a130b" stroke-width="5" />
+						<line x1="320" y1="274" x2="320" y2="-75" stroke="#1a130b" stroke-width="6" />
+						<line x1="450" y1="282" x2="450" y2="30" stroke="#1a130b" stroke-width="5" />
+
+						<!-- Odysseus, bound to the mast as the Sirens sing -->
+						<g id="odysseusMast" stroke="#f0c878" stroke-opacity="0.3" stroke-width="1">
+							<path d="M312,278 L310,250 Q310,232 320,222 Q330,232 330,250 L328,278 Z" fill="#1c140c" stroke="none" />
+							<g transform="rotate(13 320 215)">
+								<circle cx="320" cy="215" r="7" fill="#1c140c" stroke="none" />
+							</g>
+							<path d="M312,238 Q296,232 294,250 Q296,262 312,257" fill="none" stroke="#1c140c" stroke-opacity="1" stroke-width="3" stroke-linecap="round" />
+							<path d="M328,238 Q344,232 346,250 Q344,262 328,257" fill="none" stroke="#1c140c" stroke-opacity="1" stroke-width="3" stroke-linecap="round" />
+							<line x1="300" y1="241" x2="340" y2="241" stroke="#c98f3f" stroke-opacity="0.9" stroke-width="2.5" />
+							<line x1="302" y1="257" x2="338" y2="257" stroke="#c98f3f" stroke-opacity="0.9" stroke-width="2.5" />
+							<line x1="305" y1="271" x2="335" y2="271" stroke="#c98f3f" stroke-opacity="0.9" stroke-width="2" />
+							<path d="M330,232 Q345,223 351,208 Q338,221 332,227 Z" fill="url(#sailGrad)" />
+						</g>
+
+						<!-- the Sirens, close around the ship -->
+						<g id="sirensNearShip" fill="#1c140c" stroke="#f0c878" stroke-opacity="0.3" stroke-width="0.8">
+							<g transform="translate(225,150) scale(0.5)">
+								<path d="M-14,30 Q-16,8 0,4 Q16,8 14,30 Q8,40 0,38 Q-8,40 -14,30 Z" />
+								<path d="M-14,18 Q-26,10 -30,-6" fill="none" stroke="#1c140c" stroke-opacity="0.85" stroke-width="2" />
+								<circle cx="0" cy="-2" r="6" />
+							</g>
+							<g transform="translate(395,95) scale(0.42) rotate(8)">
+								<path d="M-14,30 Q-16,8 0,4 Q16,8 14,30 Q8,40 0,38 Q-8,40 -14,30 Z" />
+								<path d="M14,18 Q26,10 30,-6" fill="none" stroke="#1c140c" stroke-opacity="0.85" stroke-width="2" />
+								<circle cx="0" cy="-2" r="6" />
+							</g>
+						</g>
+
+						<!-- foremast yards -->
+						<line x1="127" y1="230" x2="253" y2="230" stroke="#15100a" stroke-width="3" />
+						<line x1="135" y1="165" x2="245" y2="165" stroke="#15100a" stroke-width="3" />
+						<line x1="143" y1="100" x2="237" y2="100" stroke="#15100a" stroke-width="3" />
+						<line x1="151" y1="35" x2="229" y2="35" stroke="#15100a" stroke-width="2.5" />
+						<line x1="159" y1="-30" x2="221" y2="-30" stroke="#15100a" stroke-width="2" />
+
+						<!-- foremast sails -->
+						<path d="M135,230 L245,230 Q286,197 237,165 L143,165 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.4" stroke-width="1" />
+						<path d="M143,165 L237,165 Q275,132 229,100 L151,100 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.35" stroke-width="1" />
+						<path d="M151,100 L229,100 Q263,67 221,35 L159,35 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.3" stroke-width="1" />
+						<path d="M159,35 L221,35 Q251,2 213,-30 L167,-30 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.25" stroke-width="1" />
+
+						<!-- mainmast yards -->
+						<line x1="248" y1="220" x2="392" y2="220" stroke="#15100a" stroke-width="3.5" />
+						<line x1="256" y1="148" x2="384" y2="148" stroke="#15100a" stroke-width="3.5" />
+						<line x1="265" y1="76" x2="375" y2="76" stroke="#15100a" stroke-width="3" />
+						<line x1="274" y1="4" x2="366" y2="4" stroke="#15100a" stroke-width="2.5" />
+						<line x1="284" y1="-62" x2="356" y2="-62" stroke="#15100a" stroke-width="2" />
+
+						<!-- mainmast sails -->
+						<path d="M256,220 L384,220 Q430,184 376,148 L264,148 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.45" stroke-width="1.2" />
+						<path d="M264,148 L376,148 Q418,112 367,76 L273,76 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.4" stroke-width="1.1" />
+						<path d="M273,76 L367,76 Q405,40 358,4 L282,4 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.35" stroke-width="1" />
+						<path d="M282,4 L358,4 Q391,-29 348,-62 L292,-62 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.3" stroke-width="1" />
+
+						<!-- mizzen yards -->
+						<line x1="404" y1="240" x2="496" y2="240" stroke="#15100a" stroke-width="3" />
+						<line x1="410" y1="175" x2="490" y2="175" stroke="#15100a" stroke-width="3" />
+						<line x1="417" y1="110" x2="483" y2="110" stroke="#15100a" stroke-width="2.5" />
+
+						<!-- mizzen sails -->
+						<path d="M410,240 L490,240 Q533,208 490,175 L410,175 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.3" stroke-width="1" />
+						<path d="M417,175 L483,175 Q514,142 475,110 L425,110 Z" fill="url(#sailGrad)" stroke="#f0c878" stroke-opacity="0.25" stroke-width="1" />
+
+						<!-- flag -->
+						<path d="M320,-75 Q345,-81 360,-73 Q340,-69 320,-65 Z" fill="#b23a2f" opacity="0.85" />
+
+						<!-- hull -->
+						<path d="M30,320 C45,298 58,286 70,278
+                       C150,270 350,270 460,274
+                       C495,277 520,280 540,282
+                       L560,318 L552,328
+                       C480,360 380,372 300,372
+                       C220,372 120,364 60,344
+                       C45,338 33,330 30,320 Z" fill="url(#hullGrad)" stroke="#f6dca0" stroke-opacity="0.35" stroke-width="1.5" />
+
+						<!-- deck rim light -->
+						<path d="M70,278 C150,270 350,270 460,274 C495,277 520,280 540,282" fill="none" stroke="#f6dca0" stroke-opacity="0.55" stroke-width="2" />
+
+						<!-- gunports -->
+						<g opacity="0.85" fill="#0c0905">
+							<rect x="95" y="306" width="13" height="7" rx="1" />
+							<rect x="140" y="312" width="13" height="7" rx="1" />
+							<rect x="185" y="317" width="13" height="7" rx="1" />
+							<rect x="230" y="321" width="13" height="7" rx="1" />
+							<rect x="280" y="323" width="13" height="7" rx="1" />
+							<rect x="330" y="323" width="13" height="7" rx="1" />
+							<rect x="380" y="320" width="13" height="7" rx="1" />
+							<rect x="425" y="315" width="13" height="7" rx="1" />
+							<rect x="468" y="308" width="13" height="7" rx="1" />
+						</g>
+
+						<!-- stern lantern -->
+						<circle cx="546" cy="288" r="5.5" fill="#f8d98a" />
+						<circle cx="546" cy="288" r="11" fill="#f8d98a" opacity="0.25" />
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<svg class="windlines" viewBox="0 0 1000 600" preserveAspectRatio="none">
+		<path class="windline wl1" d="M-50,90 Q80,72 200,90 T440,90 T680,90 T920,90 T1160,90" />
+		<path class="windline wl2" d="M-50,150 Q90,180 220,150 T460,150 T700,150 T940,150 T1180,150" />
+		<path class="windline wl3" d="M-50,210 Q70,196 190,210 T430,210 T670,210 T910,210 T1150,210" />
+		<path class="windline wl4" d="M-50,270 Q100,300 230,270 T470,270 T710,270 T950,270 T1190,270" />
+		<path class="windline wl5" d="M-50,330 Q60,316 180,330 T420,330 T660,330 T900,330 T1140,330" />
+		<path class="windline wl6" d="M-50,150 Q120,128 250,150 T500,150 T750,150 T1000,150 T1250,150" />
+		<path class="windline wl7" d="M-50,230 Q50,250 170,230 T410,230 T650,230 T890,230 T1130,230" />
+	</svg>
+
+	<div class="sea-wrap">
+		<svg viewBox="0 0 1200 540" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<linearGradient id="seaG1" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0%" stop-color="#3a2c1a" />
+					<stop offset="100%" stop-color="#1c140c" />
+				</linearGradient>
+				<linearGradient id="seaG2" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0%" stop-color="#a07737" />
+					<stop offset="100%" stop-color="#2a1f14" />
+				</linearGradient>
+				<linearGradient id="seaG3" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0%" stop-color="#d7ad5e" />
+					<stop offset="100%" stop-color="#4a3622" />
+				</linearGradient>
+				<linearGradient id="seaG4" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0%" stop-color="#f3e2b4" />
+					<stop offset="55%" stop-color="#b3823f" />
+					<stop offset="100%" stop-color="#241a10" />
+				</linearGradient>
+			</defs>
+
+			<g class="sea-shift">
+				<path class="wave wave1" d="M0,140 Q60,118 120,136 T240,132 T360,142 T480,124 T600,138 T720,120 T840,134 T960,124 T1080,138 T1200,130
+                    L1200,540 L0,540 Z" fill="url(#seaG1)" />
+
+				<path class="wave wave2" d="M0,210 Q70,176 140,206 T280,200 T420,214 T560,190 T700,208 T840,184 T980,206 T1120,196 L1200,202
+                    L1200,540 L0,540 Z" fill="url(#seaG2)" />
+
+				<path class="wave wave3" d="M0,300 Q50,250 100,292 Q150,330 210,288 Q260,250 320,294 Q380,332 440,286
+                    Q500,248 560,292 Q620,330 680,284 Q740,246 800,290 Q860,328 920,282
+                    Q980,244 1040,288 Q1100,326 1160,282 L1200,290 L1200,540 L0,540 Z" fill="url(#seaG3)" />
+
+				<path class="wave wave4" d="M0,400 Q40,360 90,392 Q130,418 180,388 Q220,358 270,394 Q310,422 360,390
+                    Q405,360 455,396 Q495,422 545,392 Q590,360 640,396 Q685,424 735,392
+                    Q780,360 830,396 Q875,424 925,392 Q970,360 1020,396 Q1065,424 1120,392
+                    Q1160,366 1200,394 L1200,540 L0,540 Z" fill="url(#seaG4)" />
+
+				<g opacity="0.7">
+					<ellipse class="foam-spark" cx="120" cy="392" rx="14" ry="5" fill="#fbf2da" style="animation-delay:0s" />
+					<ellipse class="foam-spark" cx="270" cy="394" rx="18" ry="6" fill="#fbf2da" style="animation-delay:.4s" />
+					<ellipse class="foam-spark" cx="430" cy="390" rx="12" ry="4" fill="#fbf2da" style="animation-delay:.8s" />
+					<ellipse class="foam-spark" cx="600" cy="392" rx="20" ry="6" fill="#fbf2da" style="animation-delay:1.1s" />
+					<ellipse class="foam-spark" cx="760" cy="394" rx="14" ry="5" fill="#fbf2da" style="animation-delay:1.6s" />
+					<ellipse class="foam-spark" cx="930" cy="390" rx="16" ry="5" fill="#fbf2da" style="animation-delay:2s" />
+					<ellipse class="foam-spark" cx="1080" cy="394" rx="18" ry="6" fill="#fbf2da" style="animation-delay:2.4s" />
+				</g>
+			</g>
+		</svg>
+	</div>
+
+	<!-- creatures and small craft breaking the surface near the ship -->
+	<div class="world-near-wrap">
+		<svg viewBox="0 0 14000 220" preserveAspectRatio="none">
+			<g fill="#1c130a" fill-opacity="0.85" stroke="#f0c878" stroke-opacity="0.2" stroke-width="1">
+
+				<!-- dolphins -->
+				<g transform="translate(576,0)">
+					<path d="M-50,195 C-35,150 0,135 30,150 C45,158 40,175 20,185 C0,194 -30,196 -50,195 Z" />
+					<path d="M-5,148 L5,128 L12,150 Z" />
+					<ellipse cx="-50" cy="197" rx="10" ry="3" fill="#fbf2da" fill-opacity="0.3" stroke="none" />
+					<ellipse cx="30" cy="193" rx="9" ry="3" fill="#fbf2da" fill-opacity="0.3" stroke="none" />
+					<path d="M20,203 C32,172 56,162 76,172 C86,178 83,190 69,197 C55,204 35,205 20,203 Z" />
+					<path d="M48,170 L55,156 L60,172 Z" />
+				</g>
+
+				<!-- fish breaking the surface -->
+				<g transform="translate(1728,0)">
+					<g transform="translate(0,0)">
+						<ellipse cx="0" cy="185" rx="10" ry="5" />
+						<path d="M-10,185 L-22,178 L-22,192 Z" />
+					</g>
+					<g transform="translate(28,-8)">
+						<ellipse cx="0" cy="178" rx="8" ry="4" />
+						<path d="M-8,178 L-18,172 L-18,184 Z" />
+					</g>
+					<g transform="translate(55,-35) rotate(-15)">
+						<ellipse cx="0" cy="150" rx="9" ry="4.5" />
+						<path d="M-9,150 L-20,144 L-20,156 Z" />
+					</g>
+					<ellipse cx="55" cy="190" rx="8" ry="3" fill="#fbf2da" fill-opacity="0.3" stroke="none" />
+				</g>
+
+				<!-- jellyfish bloom -->
+				<g transform="translate(2880,0)" fill="#ece1c8" fill-opacity="0.32" stroke="#f0c878" stroke-opacity="0.28">
+					<path d="M-12,140 Q-14,115 0,112 Q14,115 12,140 Q6,150 0,148 Q-6,150 -12,140 Z" />
+					<path d="M-6,148 Q-8,165 -5,180" fill="none" stroke-width="1" />
+					<path d="M-2,149 Q-3,168 0,184" fill="none" stroke-width="1" />
+					<path d="M2,149 Q4,166 6,178" fill="none" stroke-width="1" />
+					<path d="M6,148 Q9,163 12,174" fill="none" stroke-width="1" />
+					<g transform="translate(34,18) scale(0.7)">
+						<path d="M-12,140 Q-14,115 0,112 Q14,115 12,140 Q6,150 0,148 Q-6,150 -12,140 Z" />
+						<path d="M-6,148 Q-8,165 -5,180" fill="none" stroke-width="1" />
+						<path d="M2,149 Q4,166 6,178" fill="none" stroke-width="1" />
+					</g>
+				</g>
+
+				<!-- shark fin -->
+				<g transform="translate(4032,0)">
+					<path d="M-18,195 L-3,150 L14,196 Z" />
+					<path d="M-40,200 Q-3,192 32,200" fill="none" stroke-opacity="0.25" stroke-width="1.5" />
+				</g>
+
+				<!-- sea turtle -->
+				<g transform="translate(5184,0)">
+					<ellipse cx="0" cy="185" rx="22" ry="13" />
+					<ellipse cx="26" cy="183" rx="7" ry="5" />
+					<path d="M-15,192 Q-26,200 -20,206 Q-8,200 -10,192 Z" />
+					<path d="M14,192 Q22,202 12,206 Q6,198 14,192 Z" />
+					<path d="M-12,196 Q-16,210 -6,212 Q-2,202 -12,196 Z" />
+				</g>
+
+				<!-- fishing boat -->
+				<g transform="translate(6336,0)">
+					<path d="M-20,190 Q0,180 20,190 L15,196 L-15,196 Z" />
+					<line x1="0" y1="190" x2="0" y2="158" />
+					<path d="M0,160 L12,173 L0,176 Z" />
+					<rect x="-4" y="176" width="6" height="12" rx="2" />
+					<circle cx="-1" cy="174" r="4" />
+				</g>
+
+				<!-- whale, breaching -->
+				<g transform="translate(7488,0)">
+					<path d="M-60,200 C-45,140 20,128 60,158 C80,173 70,193 38,200 C0,206 -40,205 -60,200 Z" />
+					<path d="M-70,198 Q-86,184 -100,192 Q-86,203 -70,206 Z" />
+					<path d="M20,135 Q24,110 18,90" fill="none" stroke="#ece1c8" stroke-opacity="0.4" stroke-width="2.5" />
+					<path d="M28,138 Q34,118 30,98" fill="none" stroke="#ece1c8" stroke-opacity="0.3" stroke-width="1.8" />
+					<circle cx="15" cy="140" r="2" fill="#0c0905" stroke="none" />
+				</g>
+
+				<!-- Charybdis, the whirlpool -->
+				<g transform="translate(8192,0)" fill="none" stroke="#241a10" stroke-opacity="0.5">
+					<ellipse cx="0" cy="170" rx="60" ry="18" stroke-width="3" />
+					<ellipse cx="0" cy="172" rx="44" ry="13" stroke-width="2.5" />
+					<ellipse cx="0" cy="174" rx="28" ry="8" stroke-width="2" />
+					<ellipse cx="0" cy="176" rx="13" ry="4" stroke-width="1.5" />
+					<path d="M30,165 Q22,158 10,160" stroke-width="1.5" />
+				</g>
+
+				<!-- seal resting on a rock -->
+				<g transform="translate(8640,0)">
+					<path d="M-25,200 Q0,178 25,200 L25,206 L-25,206 Z" />
+					<path d="M-15,196 Q-18,182 -5,178 Q10,176 16,186 Q18,196 8,198 Q-6,200 -15,196 Z" />
+					<ellipse cx="15" cy="180" rx="6" ry="5" />
+				</g>
+
+				<!-- dolphins again -->
+				<g transform="translate(9792,0)">
+					<path d="M-40,196 C-25,155 5,142 32,155 C46,162 42,178 24,187 C5,196 -22,198 -40,196 Z" />
+					<path d="M-2,153 L7,134 L14,156 Z" />
+					<ellipse cx="-40" cy="198" rx="9" ry="3" fill="#fbf2da" fill-opacity="0.3" stroke="none" />
+					<ellipse cx="32" cy="191" rx="8" ry="3" fill="#fbf2da" fill-opacity="0.3" stroke="none" />
+				</g>
+
+				<!-- orca pod -->
+				<g transform="translate(10944,0)">
+					<path d="M-55,198 C-40,145 10,130 45,150 C62,160 56,180 32,192 C8,202 -30,204 -55,198 Z" />
+					<path d="M0,148 L8,100 L18,150 Z" />
+					<ellipse cx="-30" cy="165" rx="4" ry="2.5" fill="#ece1c8" fill-opacity="0.5" stroke="none" />
+					<g transform="translate(78,12) scale(0.65)">
+						<path d="M-55,198 C-40,145 10,130 45,150 C62,160 56,180 32,192 C8,202 -30,204 -55,198 Z" />
+						<path d="M0,148 L8,100 L18,150 Z" />
+						<ellipse cx="-30" cy="165" rx="4" ry="2.5" fill="#ece1c8" fill-opacity="0.5" stroke="none" />
+					</g>
+				</g>
+
+				<!-- second fish school -->
+				<g transform="translate(12096,0)">
+					<g transform="translate(0,0)">
+						<ellipse cx="0" cy="182" rx="9" ry="4.5" />
+						<path d="M-9,182 L-20,176 L-20,188 Z" />
+					</g>
+					<g transform="translate(-24,10)">
+						<ellipse cx="0" cy="190" rx="7" ry="3.5" />
+						<path d="M-7,190 L-16,185 L-16,195 Z" />
+					</g>
+					<g transform="translate(22,-20) rotate(12)">
+						<ellipse cx="0" cy="160" rx="8" ry="4" />
+						<path d="M-8,160 L-18,155 L-18,165 Z" />
+					</g>
+				</g>
+
+				<!-- small rowboats off Ithaca's shore -->
+				<g transform="translate(12830,0)">
+					<path d="M-10,190 Q4,181 18,190 L14,196 L-6,196 Z" />
+					<line x1="4" y1="190" x2="4" y2="166" />
+					<path d="M40,193 Q52,186 64,193 L60,197 L44,197 Z" />
+				</g>
+
+			</g>
+		</svg>
+	</div>
+
+	<div class="vignette"></div>
+</div>
+
+<div class="corner-mark">
+	<span>Eva Patel · The Odyssey</span>
+	<span class="small">a developer’s voyage · book I</span>
+</div>
+
+<div class="narration" id="narration" aria-live="polite">
+	<p class="narration-label" id="narrationLabel"></p>
+	<p class="narration-text" id="narrationText"></p>
+</div>
+
+<div class="content">
+	<section class="hero">
+		<div class="hero-text" id="heroText">
+			<p class="eyebrow">a chronicle of curiosity, code & becoming</p>
+			<h1>The&nbsp;Developer’s<br>Odyssey</h1>
+			<p class="subtitle">One journey. Many unknown shores. An unfinished destination.</p>
+            <a class="begin-voyage" href="#prologue">Begin the chronicle <span>↓</span></a>
+		</div>
+	</section>
+
+    <nav class="chapter-nav" aria-label="Chronicle navigation">
+      <a class="nav-seal" href="#prologue" aria-label="Back to prologue">EP</a>
+      <div class="nav-links">
+        <a href="#prologue">Prologue</a><a href="#voyage">The voyage</a><a href="#craft">The craft</a><a href="#chronicles">Writings</a><a href="#ithaca">Ithaca</a>
+      </div>
+    </nav>
+
+    <main class="chronicle">
+      <section class="parchment-section prologue reveal" id="prologue">
+        <div class="section-kicker">Book I · The Call to Adventure</div>
+        <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+        <h2>Every odyssey begins<br><em>with a question.</em></h2>
+        <p class="lead">What can I build if I keep learning?</p>
+        <div class="prose-columns">
+          <p>My journey into software engineering began with curiosity: the desire to understand how the digital world works, how a few lines of logic can become something useful, and how technology can turn an idea into an experience someone can actually use.</p>
+          <p>What began as exploration grew into a practice of building, experimenting, researching, writing, and collaborating. I have learned that becoming an engineer is not a straight road. It is a voyage shaped by unfamiliar tools, difficult problems, unexpected discoveries, and the willingness to begin again.</p>
+        </div>
+        <div class="signature-line"><span>Eva J. Patel</span><span>Iter · Ingenium · Inventio</span></div>
+      </section>
+
+      <section class="chapter-intro reveal" id="voyage">
+        <span class="chapter-number">02</span>
+        <div><div class="section-kicker">The Voyage · A Map of Becoming</div><h2>Across unfamiliar waters</h2>
+        <p>In the Odyssey, every shore tests a different part of Odysseus. In software, every project asks for a different kind of thinking.</p></div>
+      </section>
+
+      <section class="journey-grid">
+        <article class="journey-card reveal">
+          <div class="card-top"><span>I</span><span>THE CALL</span></div><div class="card-symbol">⌘</div>
+          <h3>Troy · The First Lines</h3>
+          <p>Every journey has a point of departure. Mine was the decision to move beyond simply using technology and begin understanding how it is made: learning programming fundamentals, exploring Python, and discovering the satisfaction of solving a problem step by step.</p>
+          <div class="card-foot">Curiosity becomes direction</div>
+        </article>
+        <article class="journey-card reveal">
+          <div class="card-top"><span>II</span><span>THE TEMPTATION</span></div><div class="card-symbol">✧</div>
+          <h3>The Lotus-Eaters · The Comfort of the Familiar</h3>
+          <p>It is easy to remain with what already works. Growth asks me to leave the familiar behind: to try another framework, read unfamiliar documentation, experiment with a new tool, and resist the temptation to stop at the first working version.</p>
+          <div class="card-foot">Learning requires exploration</div>
+        </article>
+        <article class="journey-card reveal">
+          <div class="card-top"><span>III</span><span>THE TEST</span></div><div class="card-symbol">⟁</div>
+          <h3>The Cyclops · Debugging the Unknown</h3>
+          <p>Some problems look enormous until they are broken into smaller ones. Debugging has taught me to inspect assumptions, trace errors, test carefully, and understand why a solution works—not merely how to make an error disappear.</p>
+          <div class="card-foot">Precision over guesswork</div>
+        </article>
+        <article class="journey-card reveal">
+          <div class="card-top"><span>IV</span><span>THE WINDS</span></div><div class="card-symbol">〰</div>
+          <h3>Aeolus · Learning to Navigate</h3>
+          <p>Projects rarely follow a perfectly predictable route. Choosing an architecture, managing dependencies, integrating services, and deciding what to build next all require judgment. I am learning to plan carefully while staying adaptable when the wind changes.</p>
+          <div class="card-foot">Structure meets adaptability</div>
+        </article>
+        <article class="journey-card reveal">
+          <div class="card-top"><span>V</span><span>THE DEEP</span></div><div class="card-symbol">⌁</div>
+          <h3>Scylla & Charybdis · Difficult Trade-offs</h3>
+          <p>Engineering means balancing competing priorities: simplicity and flexibility, performance and maintainability, ambitious features and realistic scope. There is rarely one perfect answer. The work is learning to make thoughtful decisions and explain them.</p>
+          <div class="card-foot">Trade-offs are part of the craft</div>
+        </article>
+        <article class="journey-card reveal">
+          <div class="card-top"><span>VI</span><span>THE SIRENS</span></div><div class="card-symbol">♬</div>
+          <h3>The Sirens · Focus Amid Distraction</h3>
+          <p>New technologies and exciting ideas are everywhere. The challenge is to stay anchored to the problem at hand: finish meaningful work, document decisions, test what I create, and avoid mistaking endless experimentation for progress.</p>
+          <div class="card-foot">Intentional work over noise</div>
+        </article>
+      </section>
+
+      <section class="manifesto reveal">
+        <div class="manifesto-mark">“</div>
+        <blockquote>The goal is not to know every tool. It is to become the kind of engineer who can learn any tool needed to solve the problem.</blockquote>
+        <span>— A principle for the voyage ahead</span>
+      </section>
+
+      <section class="chapter-intro reveal" id="craft">
+        <span class="chapter-number">03</span>
+        <div><div class="section-kicker">The Artificer’s Hall · Work & Experiments</div><h2>What I have built along the way</h2>
+        <p>Each project is another island on the map: a place to test an idea, learn a new skill, and leave with a better understanding than I arrived with.</p></div>
+      </section>
+
+      <section class="artifact-list">
+        <article class="artifact reveal">
+          <div class="artifact-index">01 / AI & INTELLIGENCE</div><div class="artifact-body">
+            <h3>Building with intelligent systems</h3>
+            <p>Exploring AI and machine learning through hands-on projects, interactive visualizations, model experimentation, and applications that make complex ideas easier to understand. My work has included a 3D AI/ML visualizer, experimentation with image-generation models, and a local chatbot project using Qwen and Gradio.</p>
+            <div class="tags"><span>Python</span><span>AI / ML</span><span>Gradio</span><span>Model experimentation</span></div>
+          </div>
+          <div class="artifact-glyph">✳</div>
+        </article>
+        <article class="artifact reveal">
+          <div class="artifact-index">02 / FULL-STACK DEVELOPMENT</div><div class="artifact-body">
+            <h3>Turning ideas into usable products</h3>
+            <p>Developing web experiences that connect thoughtful interfaces with functional systems. Across projects, I have worked with React, TypeScript, JavaScript, HTML, CSS, Python, FastAPI, and Firebase—learning how frontend experiences, backend logic, and data fit together.</p>
+            <div class="tags"><span>React</span><span>TypeScript</span><span>JavaScript</span><span>FastAPI</span><span>Firebase</span></div>
+          </div>
+          <div class="artifact-glyph">⌘</div>
+        </article>
+        <article class="artifact reveal">
+          <div class="artifact-index">03 / DATA & RESEARCH</div><div class="artifact-body">
+            <h3>Finding meaning in information</h3>
+            <p>Exploring the relationship between software, data, and research through analytical tools and research-driven projects. This includes AstroRisk, a NASA-related research project, and NextSignal, a prediction-market intelligence platform built around comparing probabilities and surfacing differences.</p>
+            <div class="tags"><span>Python</span><span>Data analysis</span><span>Next.js</span><span>Research</span></div>
+          </div>
+          <div class="artifact-glyph">⌖</div>
+        </article>
+        <article class="artifact reveal">
+          <div class="artifact-index">04 / PRODUCT & DESIGN</div><div class="artifact-body">
+            <h3>Making technology understandable</h3>
+            <p>Thinking beyond whether something works to consider whether it is clear, accessible, and useful. I use Figma and other design tools to explore interfaces, prototypes, and product experiences, bringing technical decisions closer to the people who use the result.</p>
+            <div class="tags"><span>Figma</span><span>UI / UX</span><span>Prototyping</span><span>Product thinking</span></div>
+          </div>
+          <div class="artifact-glyph">◇</div>
+        </article>
+      </section>
+
+      <section class="split-section reveal">
+        <div class="split-heading"><div class="section-kicker">The Crew · Collaboration & Community</div><h2>Technology is a voyage best shared.</h2></div>
+        <div class="split-copy"><p>Engineering is not only an individual pursuit. Through collaborative projects, leadership, and nonprofit work, I have learned that building technology also means listening, communicating, organizing, and making room for other people to contribute.</p>
+        <p>As a co-founder of <strong>Classroom Crafted</strong>, I help build an educational initiative designed to make learning in mathematics, computer science, and CAD more accessible to younger students through free virtual instruction and guided projects.</p>
+        <p>I am also developing <strong>FreshStart Connect</strong>, a project concept focused on helping freshmen connect with upperclassmen through shared interests, goals, and support needs. These experiences remind me that the most meaningful technology begins with understanding people.</p></div>
+      </section>
+
+      <section class="chapter-intro reveal" id="chronicles">
+        <span class="chapter-number">04</span>
+        <div><div class="section-kicker">The Scribe’s Scrolls · Technical Writing</div><h2>To build is to discover.<br>To write is to clarify.</h2>
+        <p>Writing has become another part of my engineering practice: a way to research deeply, organize complex ideas, and make technical knowledge more approachable.</p></div>
+      </section>
+      <section class="writing-panel reveal">
+        <div class="scroll-seal">✦</div>
+        <div><div class="section-kicker">A growing library of explanations</div><h3>Technical writing & research</h3>
+          <p>My writing explores software development, programming, artificial intelligence, cybersecurity, developer tools, and the ideas behind emerging technologies. I aim to make technical subjects approachable without losing the substance that makes them worth understanding.</p>
+          <p>Topics I have explored include Python in marketing, neural networks, Gradio, Git security, and building with tools such as Lovable. I have also contributed research-oriented writing, including work connected to STEM and AI/ML.</p>
+          <p class="writing-note">The written record is still growing—one explanation, experiment, and question at a time.</p>
+          <a class="text-link" href="https://hashnode.com/@evapatel123" target="_blank" rel="noopener noreferrer">Read my technical writing ↗</a>
+          <a class="text-link" href="https://github.com/evapatel123" target="_blank" rel="noopener noreferrer">Explore my GitHub ↗</a>
+        </div>
+      </section>
+
+      <section class="chapter-intro reveal">
+        <span class="chapter-number">05</span>
+        <div><div class="section-kicker">The Lessons of the Sea · Principles</div><h2>What the voyage has taught me</h2>
+        <p>The tools will change. The habits that make good engineers will continue to matter.</p></div>
+      </section>
+      <section class="principles">
+        <div class="principle reveal"><span>01</span><h3>Stay curious.</h3><p>Ask why, investigate how, and keep learning beyond the boundaries of a single language or framework.</p></div>
+        <div class="principle reveal"><span>02</span><h3>Build with purpose.</h3><p>Start with a real problem and let the needs of the people using a product guide the work.</p></div>
+        <div class="principle reveal"><span>03</span><h3>Welcome the difficult parts.</h3><p>Errors, revisions, and unexpected constraints are not detours from engineering. They are part of it.</p></div>
+        <div class="principle reveal"><span>04</span><h3>Share what you learn.</h3><p>Document the process, explain the discoveries, and help make technical knowledge more accessible.</p></div>
+      </section>
+
+      <section class="ithaca-section reveal" id="ithaca">
+        <div class="section-kicker">Book VI · The Destination Still Ahead</div>
+        <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+        <h2>Ithaca is not<br><em>the end of the story.</em></h2>
+        <p class="lead">It is the direction that gives the voyage meaning.</p>
+        <p class="ithaca-copy">I am working toward becoming a software engineer with a deep foundation in AI and machine learning, full-stack development, and the ability to turn thoughtful ideas into useful products. I want to keep exploring the intersection of engineering, research, design, and entrepreneurship—building technology that is both technically meaningful and genuinely helpful.</p>
+        <p class="ithaca-copy">There are still languages to learn, systems to understand, projects to build, and questions I have not yet thought to ask. That is what makes the journey worth continuing.</p>
+        <div class="destination-stamp">THE VOYAGE CONTINUES</div>
+        <div class="final-links"><a href="https://github.com/evapatel123" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://hashnode.com/@evapatel123" target="_blank" rel="noopener noreferrer">Hashnode ↗</a><a href="mailto:evapatel1411@gmail.com">Write to me ↗</a></div>
+      </section>
+      <footer class="colophon"><span>Eva J. Patel · A Developer’s Odyssey</span><span>Written in curiosity · Built in progress</span><a href="#prologue">Return to the beginning ↑</a></footer>
+    </main>
+
+</div>
+    <script src="../dist/script.js"></script>
+    <script src="../dist/app.js"></script>
+
+  </body>
+  
+</html>
